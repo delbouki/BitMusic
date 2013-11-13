@@ -15,6 +15,7 @@ import bitmusic.hmi.patterns.AbstractController;
 import bitmusic.profile.classes.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +29,7 @@ public final class AccountCreationController extends AbstractController<AccountC
     public AccountCreationController(final AccountCreationModel model, final AccountCreationView view) {
         super(model, view);
     }
-    public class AccountCreationListener implements ActionListener {
+    public class browseListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("---- Clic sur le bouton Parcourir");
@@ -40,5 +41,22 @@ public final class AccountCreationController extends AbstractController<AccountC
             path.setText(file.getSelectedFile().getPath());
             }
         }
-}
+    }
+    
+    public class connectListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String login = AccountCreationController.super.getView().getloginField().getText();
+            int pass = AccountCreationController.super.getView().getpasswordField().getPassword().length;
+            int conf = AccountCreationController.super.getView().getconfirmationField().getPassword().length;
+            String p1 = Arrays.toString(AccountCreationController.super.getView().getpasswordField().getPassword());
+            String p2 = Arrays.toString(AccountCreationController.super.getView().getconfirmationField().getPassword());
+            
+            if(pass != 0 && !login.isEmpty() && conf != 0 && p1.equals(p2))
+            {
+                System.out.println("bouton connecté : conditions satisfaites");
+        
+            }
+        }
+    }
 }

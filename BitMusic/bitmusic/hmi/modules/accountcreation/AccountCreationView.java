@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JDateChooser;
+import java.util.Calendar;
 /**
  *
  * @author unkedeuxke
@@ -24,7 +25,10 @@ import com.toedter.calendar.JDateChooser;
 public final class AccountCreationView extends AbstractView<AccountCreationController> {
 
     private static final String type = "NORTH";
-
+    private final JLabel loginLabel = new JLabel("Pseudo (*)");
+    private final JTextField loginField = new JTextField("");
+    private final JPasswordField passwordField = new JPasswordField("");
+    private final JPasswordField confirmationField = new JPasswordField("");
 
     public AccountCreationView() {
         super();
@@ -39,7 +43,7 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
         JLabel createAccountLabel = new JLabel("Créer un compte");
         createAccountLabel.setSize(d);
 
-        JLabel loginLabel = new JLabel("Pseudo (*)");
+        
         loginLabel.setSize(d);
 
         JLabel passwordLabel = new JLabel("Mot de passe (*)");
@@ -62,17 +66,22 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
         
         JButton connectButton = new JButton("Se connecter");
         connectButton.setSize(d);
+        connectButton.addActionListener(this.getController().new connectListener());
 
+        
         JButton resetButton = new JButton("Réinitialiser");
         resetButton.setSize(d);
 
-        JTextField loginField = new JTextField("");
+        JLabel obligLabel = new JLabel("* : Champs obligatoire");
+        obligLabel.setSize(d);
+        
+        
         loginField.setColumns(10);
 
-        JPasswordField passwordField = new JPasswordField("");
+        
         passwordField.setColumns(10);
 
-        JPasswordField confirmationField = new JPasswordField("");
+        
         confirmationField.setColumns(10);
 
         JTextField prenomField = new JTextField("");
@@ -82,13 +91,12 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
         nomField.setColumns(10);
                 
         JDateChooser picker = new JDateChooser();
-        
+
         JButton browseButton = new JButton("Parcourir...");
         browseButton.setSize(d);
-        //final JLabel path = new JLabel();
-        browseButton.addActionListener(this.getController().new AccountCreationListener());
-        //file.showSaveDialog(this);
-        
+
+        browseButton.addActionListener(this.getController().new browseListener());
+       
         GroupLayout layout = new GroupLayout(this.getPanel());
         this.getPanel().setLayout(layout);
 
@@ -118,6 +126,7 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
                     .addComponent(browseButton)
                     .addComponent(resetButton)
                 )
+                .addComponent(obligLabel)
 
         );
         layout.setVerticalGroup(
@@ -143,7 +152,7 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
                     .addComponent(nomLabel)
                     .addComponent(nomField)
                )
-               .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+              .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(birthLabel)
                     .addComponent(picker)
                )
@@ -155,6 +164,7 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
                     .addComponent(connectButton)
                     .addComponent(resetButton)
                )
+                .addComponent(obligLabel)
 
         );
 
@@ -177,5 +187,20 @@ public final class AccountCreationView extends AbstractView<AccountCreationContr
     @Override
     public void update(Observable obj, String str) {
         System.out.println("----- AccountCreation.update()");
+    }
+    
+    public JTextField getloginField()
+    {
+        return this.loginField;
+    }
+    
+    public JPasswordField getpasswordField()
+    {
+        return this.passwordField;
+    }
+    
+    public JPasswordField getconfirmationField()
+    {
+        return this.passwordField;
     }
 }
